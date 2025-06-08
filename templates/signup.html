@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up</title>
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-box-bg: #f0f7ff;
+      --color-top-bar: #dc2626;
+      --color-text-primary: #111111;
+      --color-text-secondary: #6b7280;
+      --color-button-bg: #000000;
+      --color-button-hover-bg: #222222;
+      --radius: 0.75rem;
+      --transition: 0.25s ease;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    }
+
+    /* Top red bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-top-bar);
+      z-index: 1100;
+    }
+
+    body {
+      margin: 0;
+      padding-top: 8px; /* offset for top bar */
+      min-height: 100vh;
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem 2rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 18px;
+      line-height: 1.6;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    main.container {
+      background-color: var(--color-box-bg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border-radius: var(--radius);
+      max-width: 400px;
+      width: 100%;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin: 0 0 1rem 0;
+      color: var(--color-text-primary);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: left;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color var(--transition);
+      width: 100%;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--color-button-bg);
+      outline: none;
+    }
+
+    input[type="submit"] {
+      background-color: var(--color-button-bg);
+      color: var(--color-bg);
+      padding: 0.75rem;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.125rem;
+      cursor: pointer;
+      transition: background-color var(--transition), transform var(--transition);
+    }
+
+    input[type="submit"]:hover,
+    input[type="submit"]:focus-visible {
+      background-color: var(--color-button-hover-bg);
+      transform: scale(1.05);
+      outline: none;
+    }
+
+    p {
+      margin: 0.5rem 0;
+      color: var(--color-text-secondary);
+    }
+
+    a {
+      color: var(--color-button-bg);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Fingerprint scanning container */
+    .scan-container {
+      background-color: var(--color-box-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      padding: 2.5rem 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+      display: none; /* hidden by default */
+      gap: 1.5rem;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .scan-container.active {
+      display: flex;
+    }
+
+    .scan-title {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: var(--color-text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .fingerprint-svg {
+      width: 100px;
+      height: 130px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .fingerprint-svg path {
+      fill: none;
+      stroke: var(--color-text-secondary);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .scan-arc {
+      stroke: var(--color-button-bg);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 85;
+      stroke-dashoffset: 85;
+      animation: scanStroke 2.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 4px var(--color-button-bg));
+    }
+
+    @keyframes scanStroke {
+      0% {
+        stroke-dashoffset: 85;
+        opacity: 0.3;
+      }
+      50% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 85;
+        opacity: 0.3;
+      }
+    }
+  </style>
+  <script>
+    // Function to toggle fingerprint scanning animation visibility
+    function showScanningAnimation(show = true) {
+      const scanContainer = document.getElementById('scanContainer');
+      if (show) {
+        scanContainer.classList.add('active');
+        scanContainer.setAttribute('aria-hidden', 'false');
+      } else {
+        scanContainer.classList.remove('active');
+        scanContainer.setAttribute('aria-hidden', 'true');
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="top-bar" aria-hidden="true"></div>
+
+  <main class="container" role="main" aria-label="Sign Up Form">
+    <h1>Sign Up</h1>
+    <form method="POST">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required placeholder="Enter your username" autocomplete="username" />
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required placeholder="Enter your password" autocomplete="new-password" />
+      <p>
+        For additional security, please place your finger on the scanner when prompted. 
+        Your fingerprint will be captured, encrypted, and stored alongside your credentials.
+      </p>
+      <input type="submit" value="Sign Up" />
+    </form>
+
+    <p>Already have an account? <a href="{{ url_for('login') }}">Log In</a></p>
+  </main>
+
+  <section id="scanContainer" class="scan-container" aria-live="polite" aria-label="Fingerprint scanning animation" aria-hidden="true">
+    <div class="scan-title">Scanning Fingerprint</div>
+    <svg class="fingerprint-svg" viewBox="0 0 64 86" aria-hidden="true" focusable="false" >
+      <!-- Base fingerprint lines -->
+      <path d="M32 2c14 0 22 14 22 29s-8 53-22 53-22-39-22-53 8-29 22-29z" />
+      <path d="M32 11c9 0 18 10 18 24s-9 44-18 44-18-34-18-44 9-24 18-24z" />
+      <path d="M32 24c5 0 11 7 11 17s-6 32-11 32-11-24-11-32 6-17 11-17z" />
+      <!-- Animated scanning arc -->
+      <path class="scan-arc" d="M15 60a17 17 0 0 1 34 0" />
+    </svg>
+    <p>Please keep your finger steady on the scanner until the process completes.</p>
+  </section>
+</body>
+</html>

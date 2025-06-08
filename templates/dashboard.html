@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Professional</title>
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-box-bg: #f0f7ff; /* light blue box background */
+      --color-top-bar: #dc2626; /* red top bar (red-600) */
+      --color-text-primary: #111111;
+      --color-text-secondary: #6b7280;
+      --color-button-bg: #000000;
+      --color-button-hover-bg: #222222;
+      --color-card-bg: var(--color-box-bg);
+      --radius: 0.75rem;
+      --transition: 0.25s ease;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    }
+
+    /* Top full-width red bar */
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-top-bar);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1100;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      display: flex;
+      flex-direction: column;
+      font-size: 18px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background-color var(--transition), color var(--transition);
+      padding-top: 8px; /* offset for fixed bar */
+    }
+
+    header {
+      position: sticky;
+      top: 8px; /* below top bar */
+      background: var(--color-bg);
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 100;
+      user-select: none;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-text-primary);
+      cursor: default;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    button.theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      padding: 0.15rem;
+      display: flex;
+      align-items: center;
+      transition: color var(--transition);
+    }
+    button.theme-toggle:hover,
+    button.theme-toggle:focus-visible {
+      color: var(--color-button-bg);
+      outline: none;
+    }
+    button.theme-toggle svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke-width: 2;
+      stroke: currentColor;
+      display: block;
+    }
+    a.logout-btn {
+      background-color: var(--color-button-bg);
+      color: var(--color-bg);
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.6rem 1.6rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      user-select: none;
+      transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    a.logout-btn:hover,
+    a.logout-btn:focus-visible {
+      background-color: var(--color-button-hover-bg);
+      transform: scale(1.05);
+      outline-offset: 2px;
+      outline: 2px solid var(--color-button-bg);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    main.container {
+      max-width: 1200px;
+      margin: 4rem auto 3rem;
+      padding: 2rem 2rem 3rem;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      background-color: var(--color-box-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    h1 {
+      font-weight: 800;
+      font-size: 4rem;
+      line-height: 1.1;
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+    p.welcome-text {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 1.3rem;
+      color: var(--color-text-secondary);
+      max-width: 650px;
+      margin: 0;
+    }
+    section.card {
+      background-color: var(--color-box-bg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border-radius: var(--radius);
+      padding: 2.25rem 2.5rem;
+      max-width: 640px;
+      transition: box-shadow var(--transition), transform var(--transition);
+      color: var(--color-text-secondary);
+    }
+    section.card:hover,
+    section.card:focus-within {
+      box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+      transform: translateY(-6px);
+      color: var(--color-text-primary);
+    }
+    section.card h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.875rem;
+      color: var(--color-text-primary);
+      transition: color var(--transition);
+    }
+    section.card p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+      transition: color var(--transition);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      border-top: 1px solid #e5e7eb;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar" aria-hidden="true"></div>
+  <header>
+    <div class="logo" aria-label="Dashboard Home">MY DASHBOARD</div>
+    <nav>
+      <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode" id="themeToggle" type="button" tabindex="0">
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;">
+          <circle cx="12" cy="12" r="5" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.364-7.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636" />
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+        </svg>
+      </button>
+      <a href="{{ url_for('logout') }}" class="logout-btn" aria-label="Logout">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Welcome to Your Dashboard</h1>
+    <p class="welcome-text">Hello, <strong>{{ session['username'] }}</strong>! You have successfully logged in.</p>
+
+    <section class="card" tabindex="0" aria-label="User overview section">
+      <h2>Your Overview</h2>
+      <p>This is your personalized dashboard where you can find quick access to your account metrics, recent activity, and essential actions.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 MyDashboard. All rights reserved.
+  </footer>
+
+  <script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+
+    function initTheme() {
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+        document.body.classList.add('dark');
+        iconSun.style.display = 'block';
+        iconMoon.style.display = 'none';
+      } else {
+        document.body.classList.remove('dark');
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'block';
+      }
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      if (document.body.classList.contains('dark')) {
+        iconSun.style.display = 'block';
+        iconMoon.style.display = 'none';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'block';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    initTheme();
+  </script>
+</body>
+</html>

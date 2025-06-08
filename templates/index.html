@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - Fingerprint Authentication Demo</title>
+  <style>
+    :root {
+      --color-bg: #ffffff;
+      --color-box-bg: #f0f7ff; /* light blue box background */
+      --color-top-bar: #dc2626; /* red top bar */
+      --color-text-primary: #111111;
+      --color-text-secondary: #6b7280;
+      --color-button-bg: #000000;
+      --color-button-hover-bg: #222222;
+      --radius: 0.75rem;
+      --transition: 0.25s ease;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    }
+    .top-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-top-bar);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1100;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem 2rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 18px;
+      line-height: 1.6;
+      padding-top: 8px; /* offset for fixed red bar */
+    }
+    main.container {
+      background-color: var(--color-box-bg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border-radius: var(--radius);
+      max-width: 420px;
+      width: 100%;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      user-select: none;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+    p.lead {
+      font-weight: 500;
+      font-size: 1.125rem;
+      margin-bottom: 2.75rem;
+      color: var(--color-text-secondary);
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    a.button {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+      padding: 0.65rem 2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background-color var(--transition),
+                  transform var(--transition),
+                  box-shadow var(--transition);
+      min-width: 140px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      user-select: none;
+      color: var(--color-bg);
+      background-color: var(--color-button-bg);
+    }
+    a.button:hover,
+    a.button:focus-visible {
+      background-color: var(--color-button-hover-bg);
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      outline: none;
+    }
+    a.button:focus-visible {
+      outline: 3px solid var(--color-text-primary);
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar" aria-hidden="true"></div>
+  <main class="container" role="main" aria-label="Homepage sign up and login">
+    <h1>Welcome to the Fingerprint Authentication System</h1>
+    <p class="lead">Securely manage your account with easy fingerprint login.</p>
+
+    <div class="btn-group">
+      <a href="{{ url_for('signup') }}" class="button" role="button" tabindex="0">Sign Up</a>
+      <a href="{{ url_for('login') }}" class="button" role="button" tabindex="0">Log In</a>
+    </div>
+  </main>
+</body>
+</html>
